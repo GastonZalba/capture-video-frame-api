@@ -18,7 +18,7 @@ Aplicación pequeña en **FastAPI** que genera una imagen capturada de un video 
 2. Creá un entorno virtual (opcional pero recomendado):
 
     ```bash
-    python -m venv venv
+    python -m venv .venv
     source .venv/bin/activate  # Linux/macOS
     .venv/Scripts/activate     # Windows
     ```
