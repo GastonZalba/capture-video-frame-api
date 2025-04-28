@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+requests
+markdown
+numpy==2.0.2
+opencv-python==4.11.0.86
+typing-extensions==4.13.0
+yt-dlp==2025.3.31
