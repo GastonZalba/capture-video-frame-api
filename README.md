@@ -1,6 +1,11 @@
 # Capture Video Frame API
 
-Aplicación pequeña en **FastAPI** que genera una imagen capturada de un video en base a una ID de video, un servicio (como YouTube), un tiempo de captura y un ca calidad específica.
+Api pequeña en **FastAPI** que devuelve una captura de video en base a un ID, un servicio (como YouTube), un tiempo de captura en la calidad especificada
+
+## Funcionamiento general
+- Youtube: 
+    - se utiliza el módulo [yt_dlp](https://pypi.org/project/yt-dlp/) para realizar la descarga en el segundo solicitado (de 0.1 segundo de duración) en la calidad especificada. 
+    - Usando [ffmpeg](https://www.ffmpeg.org/) se captura el primer frame de ese fragmento, retornándolo al cliente como imagen jpg.
 
 ---
 
@@ -8,6 +13,7 @@ Aplicación pequeña en **FastAPI** que genera una imagen capturada de un video 
 
 - Python 3.8+
 - pip
+- ffmpeg
 
 ---
 
