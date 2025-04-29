@@ -1,6 +1,6 @@
 import markdown
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 
 from .capture_frame import router
 from .cors import add_cors_middleware
@@ -14,6 +14,10 @@ app = FastAPI(
 add_cors_middleware(app)
 
 app.include_router(router)
+
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return FileResponse('favicon.ico')
 
 with open("README.md", "r", encoding="utf-8") as f:
     readme_content = f.read()
