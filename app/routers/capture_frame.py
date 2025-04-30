@@ -3,8 +3,8 @@ import io
 from fastapi import APIRouter, Query, HTTPException
 from fastapi.responses import StreamingResponse
 
-from .ytdl import download_and_capture
-from .enums import QualityOption, SourceOption
+from ..controllers.capture import download_and_capture
+from ..enums import QualityOption, SourceOption
 
 router = APIRouter()
 

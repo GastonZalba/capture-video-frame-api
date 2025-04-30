@@ -102,3 +102,8 @@ Hay un archivo `test.py` que hace una petición de prueba al servidor y guarda l
 - La aplicación está configurada para permitir solicitudes CORS únicamente desde dominios `*.minfra.gba.gob.ar`.
 
 ---
+
+
+# @TODO
+- Check if a video file already exists before trying to download it
+- Maybe autoclean older tmp files
