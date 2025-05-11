@@ -2,7 +2,8 @@ import markdown
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, FileResponse
 
-from .routers.capture_frame import router
+from .routers import capture_frame, get_qualities
+
 from .middlewares.cors import add_cors_middleware
 from ._home import get_home
 
@@ -14,7 +15,8 @@ app = FastAPI(
 
 add_cors_middleware(app)
 
-app.include_router(router)
+app.include_router(capture_frame.router)
+app.include_router(get_qualities.router)
 
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon():

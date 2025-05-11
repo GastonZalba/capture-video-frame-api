@@ -64,18 +64,20 @@ Realizar una petición GET con los siguientes parámetros:
 | vid       | str   | ID del video      |
 | source   | str   | Origen del video (ej: youtube)        |
 | time   | int   | Tiempo de inicio en segundos (ej: 30)        |
-| quality   | str   | Calidad del video (por defecto 134 = 360p)  |
+| resolution   | str   | Resolución vertical del video (por defecto 360)  |
 
-### Calidades
-- 134 (360)
-- 135 (480)
-- 136 (720)
-- 137 (1080)
-- 138 (2k)
-- 139 (4k)
+### Resoluciones habituales
+    - 144
+    - 240
+    - 360
+    - 480
+    - 720
+    - 1080    
+    - 1440
+    - 2160
 
 **Ejemplo de URL de petición**:
-`http://localhost:8000/capture-frame?vid=XXXXX&source=youtube&time=3&quality=135`
+`http://localhost:8000/capture-frame?vid=XXXXX&source=youtube&time=3&resolution=360`
 
 
 ---
@@ -98,7 +100,7 @@ Hay un archivo `test.py` que hace una petición de prueba al servidor y guarda l
 
 ## Notas
 
-- El parámetro `quality` depende de las resoluciones disponibles del video.
+- El parámetro `resolution` depende de las resoluciones disponibles del video.
 - La aplicación está configurada para permitir solicitudes CORS únicamente desde dominios `*.minfra.gba.gob.ar`.
 
 ---

@@ -1,14 +1,25 @@
 import requests
 
+params = {
+    "vid": "8plVWI7InnI",  # URL de ejemplo
+    "source": "youtube",
+    "time": 5,
+    "resolution": 360
+}
+
+def test_get_qualities():
+    endpoint = "http://localhost:8000/get-qualities"
+
+    response = requests.get(endpoint, params=params)
+
+    if response.status_code == 200:
+        print(f"✅ Calidades obtenidas: {response.content}")
+    else:
+        print(f"❌ Error {response.status_code}: {response.text}")
+
+
 def test_generate_image():
-    # Configurá la URL del endpoint y los parámetros
     endpoint = "http://localhost:8000/capture-frame"
-    params = {
-        "vid": "8plVWI7InnI",  # URL de ejemplo
-        "source": "youtube",
-        "time": 90,
-        "quality": 134
-    }
 
     response = requests.get(endpoint, params=params)
 
@@ -21,5 +32,7 @@ def test_generate_image():
     else:
         print(f"❌ Error {response.status_code}: {response.text}")
 
+
 if __name__ == "__main__":
+    #test_get_qualities()
     test_generate_image()
