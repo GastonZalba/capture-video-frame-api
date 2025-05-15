@@ -1,11 +1,11 @@
 # Capture Video Frame API
 
-Api pequeña en **FastAPI** que devuelve una captura de video en base a un ID, un servicio (como YouTube), un tiempo de captura en la calidad especificada
+**FastAPI** que devuelve una captura de video en base a un ID, un servicio (como YouTube) y un tiempo de video en una calidad especificada. También permite averiguar qué calidades de video existen antes de realizar la descarga.
 
 ## Funcionamiento general
-- Youtube: 
-    - se utiliza el módulo [yt_dlp](https://pypi.org/project/yt-dlp/) para realizar la descarga en el segundo solicitado (de 0.1 segundo de duración) en la calidad especificada. 
-    - Usando [ffmpeg](https://www.ffmpeg.org/) se captura el primer frame de ese fragmento, retornándolo al cliente como imagen jpg.
+- Captura de imagen de YouTube: se utiliza el módulo [yt_dlp](https://pypi.org/project/yt-dlp/) para realizar la descarga en el segundo solicitado, en formato video webm (de 0.1 segundo de duración) y en la calidad requerida. 
+- Usando [ffmpeg](https://www.ffmpeg.org/) se captura el primer frame de ese fragmento, retornándolo al cliente como imagen jpg.
+- Cacheado de recursos: como los tiempos de las peticiones usando yt_dlp son muy largos, se utiliza el módulo [diskcache](https://pypi.org/project/diskcache/) para almacenar temporalmente cada respuesta (30 días para imágenes, 360 para los `.json` de calidades existentes), posibilitando responder instantáneamente futuras peticiones. Los elementos cacheados se almacenan en la carpeta temporal del sistema (retornada por `tempfile.gettempdir()`)
 
 ---
 
@@ -54,8 +54,8 @@ Api pequeña en **FastAPI** que devuelve una captura de video en base a un ID, u
     ```
 
 ---
-
-## Endpoint `/capture-frame`
+## Uso
+### Endpoint `/capture-frame`
 
 Realizar una petición GET para obtener una imagen con los siguientes parámetros:
 
@@ -66,7 +66,7 @@ Realizar una petición GET para obtener una imagen con los siguientes parámetro
 | time   | float   | Tiempo de inicio en segundos (ej: 30)        |
 | resolution   | int   | Resolución vertical del video (por defecto 360)  |
 
-### Resoluciones habituales
+#### Resoluciones habituales
 * 144
 * 240
 * 360
@@ -77,10 +77,11 @@ Realizar una petición GET para obtener una imagen con los siguientes parámetro
 * 2160
 
 **Ejemplo de URL de petición**:
-`http://localhost:8000/capture-frame?vid=XXXXX&source=youtube&time=3&resolution=360`
+[http://localhost:8000/capture-frame?vid=dQw4w9WgXcQ&source=youtube&time=6.6&resolution=360](http://localhost:8000/capture-frame?vid=dQw4w9WgXcQ&source=youtube&time=6.6&resolution=360)
 
 
-## Endpoint `/get-qualities`
+### Endpoint `/get-qualities`
+
 Realizar una petición GET para obtener todas las calidades exitentes del video, con los siguientes parámetros:
 
 | Parámetro | Tipo  | Descripción                                 |
@@ -89,12 +90,13 @@ Realizar una petición GET para obtener todas las calidades exitentes del video,
 | source   | SourceOption   | Origen del video (ej: youtube)        |
 
 **Ejemplo de URL de petición**:
-`http://localhost:8000/get-qualities?vid=XXXXX&source=youtube`
+[http://localhost:8000/get-qualities?vid=dQw4w9WgXcQ&source=youtube](http://localhost:8000/get-qualities?vid=dQw4w9WgXcQ&source=youtube)
+
 ---
 
-## Cómo correr el test
+## Tests
 
-Hay un archivo `test.py` que hace una petición de prueba al servidor y guarda la imagen en el disco.
+Hay un archivo `test.py` que hace una petición de prueba al servidor, obtiene las calidades disponibles del video y una imagen en el disco.
 
 1. Asegurate de que la API esté corriendo (`uvicorn` abierto).
 
@@ -110,7 +112,9 @@ Hay un archivo `test.py` que hace una petición de prueba al servidor y guarda l
 
 ## Notas
 
-- El parámetro `resolution` depende de las resoluciones disponibles del video.
 - La aplicación está configurada para permitir solicitudes CORS únicamente desde dominios `*.minfra.gba.gob.ar`.
 
 ---
+
+# #TODO
+- Usar env para manejo de variables por entorno

@@ -1,8 +1,8 @@
 from diskcache import Cache
 
-from ..params import tmp_folder
+from ..params import TMP_FOLDER
 
-cache = Cache(tmp_folder)
+cache = Cache(TMP_FOLDER)
 
 def get_cache(id: str):
     if id in cache:

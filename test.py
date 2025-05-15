@@ -1,9 +1,9 @@
 import requests
 
 params = {
-    "vid": "8plVWI7InnI",  # URL de ejemplo
+    "vid": "dQw4w9WgXcQ",  # URL de ejemplo
     "source": "youtube",
-    "time": 5,
+    "time": 6.6,
     "resolution": 360
 }
 
@@ -34,5 +34,5 @@ def test_generate_image():
 
 
 if __name__ == "__main__":
-    #test_get_qualities()
+    test_get_qualities()
     test_generate_image()

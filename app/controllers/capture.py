@@ -5,7 +5,7 @@ from PIL import Image
 
 from .youtube import download_youtube_video
 from ..enums import SourceOption
-from ..params import tmp_folder
+from ..params import TMP_FOLDER
 
 def save_image_from_video(video_path, output_image):
     cap = cv2.VideoCapture(video_path)
@@ -27,25 +27,23 @@ def save_image_from_video(video_path, output_image):
 
 def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: float, resolution:str):
 
-    video_filename = f"{tmp_folder}/{youtube_id}_{start_seconds}_{resolution}.webm"
+    video_filename = os.path.join(TMP_FOLDER, f"{youtube_id}_{start_seconds}_{resolution}.webm")
     frame_id = f"ytid-{youtube_id}_sec-{start_seconds}_{resolution}"
     
-    output = os.path.join(tmp_folder, youtube_id)
+    output = os.path.join(TMP_FOLDER, youtube_id)
+    
+    os.makedirs(output, exist_ok=True)
 
     image_path = os.path.join(output, frame_id + ".jpeg")
 
-    # check if file is already downloaded
-    if not os.path.isfile(image_path):
-
-        if (source == SourceOption.YT):
-            download_youtube_video(youtube_id, start_seconds, video_filename, resolution)
-        else:
-            return False
-
-        # Create the folder if it doesn't exist
-        os.makedirs(output, exist_ok=True)
-            
-        save_image_from_video(video_filename, output_image=image_path)
+    if (source == SourceOption.YT):
+        download_youtube_video(youtube_id, start_seconds, video_filename, resolution)
+    else:
+        return False
         
-    return Image.open(image_path)
-                
+    save_image_from_video(video_filename, output_image=image_path)
+    
+    # remove the webm temp file
+    os.remove(video_filename)
+    
+    return Image.open(image_path)                

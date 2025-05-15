@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 
 from ..controllers.youtube import get_youtube_qualities
 from ..controllers.cache import get_cache, set_cache
+from ..params import CACHE_DAYS_JSON
 from ..enums import SourceOption
 
 router = APIRouter()
@@ -14,7 +15,7 @@ def get_qualities(
 ):
     try:    
         
-        id_cache = f'{vid}-{source}'
+        id_cache = f'q_{vid}-{source}'
         cache = get_cache(id_cache)
         
         if (cache):
@@ -25,7 +26,7 @@ def get_qualities(
             else:
                 return
             
-            set_cache(id_cache, qualities)
+            set_cache(id_cache, qualities, CACHE_DAYS_JSON)
             
         return JSONResponse(content=qualities, status_code=200)
     

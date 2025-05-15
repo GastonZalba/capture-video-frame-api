@@ -24,6 +24,7 @@ pre { background-color: #333333; padding: 10px; border-radius: 6px; }
 table { border-collapse: collapse; width: 100%; }
 th, td { border: 1px solid #444; padding: 8px; }
 th { background-color: #222; }
+ul li { margin: 10px 5px; font-size: 0.9em; }
 </style>
 """
 
