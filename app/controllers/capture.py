@@ -31,23 +31,23 @@ def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: f
 
     video_filename = f"{tmp_folder}/{youtube_id}_{start_seconds}_{resolution}.webm"
     frame_id = f"ytid-{youtube_id}_sec-{start_seconds}"
-
-    if (source == SourceOption.YT):
-        download_youtube_video(youtube_id, start_seconds, video_filename, resolution)
-    else:
-        return False
-        
+    
     output = tmp_folder + "/" + youtube_id
 
-    # Create the folder if it doesn't exist
-    os.makedirs(output, exist_ok=True)
-
     image_path = output + "/" + frame_id + ".jpeg"
+
+    # check if file is already downloaded
+    if not os.path.isfile(image_path):
+
+        if (source == SourceOption.YT):
+            download_youtube_video(youtube_id, start_seconds, video_filename, resolution)
+        else:
+            return False
+
+        # Create the folder if it doesn't exist
+        os.makedirs(output, exist_ok=True)
+            
+        save_image_from_video(video_filename, output_image=image_path)
         
-    captured = save_image_from_video(video_filename, output_image=image_path)
-    
-    if captured:
-        return Image.open(image_path)
-    else:
-        return False
+    return Image.open(image_path)
                 
