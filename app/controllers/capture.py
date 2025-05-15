@@ -30,7 +30,7 @@ def save_image_from_video(video_path, output_image):
 def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: float, resolution:str):
 
     video_filename = f"{tmp_folder}/{youtube_id}_{start_seconds}_{resolution}.webm"
-    frame_id = f"ytid-{youtube_id}_sec-{start_seconds}"
+    frame_id = f"ytid-{youtube_id}_sec-{start_seconds}_{resolution}"
     
     output = tmp_folder + "/" + youtube_id
 
