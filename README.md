@@ -5,7 +5,7 @@
 ## Funcionamiento general
 - Captura de imagen de YouTube: se utiliza el módulo [yt_dlp](https://pypi.org/project/yt-dlp/) para realizar la descarga en el segundo solicitado, en formato video webm (de 0.1 segundo de duración) y en la calidad requerida. 
 - Usando [ffmpeg](https://www.ffmpeg.org/) se captura el primer frame de ese fragmento, retornándolo al cliente como imagen jpg.
-- Cacheado de recursos: como los tiempos de las peticiones usando yt_dlp son muy largos, se utiliza el módulo [diskcache](https://pypi.org/project/diskcache/) para almacenar temporalmente cada respuesta (30 días para imágenes, 360 para los `.json` de calidades existentes), posibilitando responder instantáneamente futuras peticiones. Los elementos cacheados se almacenan en la carpeta temporal del sistema (retornada por `tempfile.gettempdir()`)
+- Cacheado de recursos: como los tiempos de las peticiones usando yt_dlp son muy largos, se utiliza el módulo [diskcache](https://pypi.org/project/diskcache/) para almacenar temporalmente cada respuesta (30 días para imágenes, 360 para los `.json` de calidades existentes), posibilitando responder instantáneamente futuras peticiones. Los elementos cacheados se almacenan en la carpeta temporal del sistema (retornada por `tempfile.gettempdir()`), pudiendo alcanzar un limíte máximo de 200 MB.
 
 ---
 
