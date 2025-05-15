@@ -55,31 +55,41 @@ Api pequeña en **FastAPI** que devuelve una captura de video en base a un ID, u
 
 ---
 
-## Cómo usar el endpoint `/capture-frame`
+## Endpoint `/capture-frame`
 
-Realizar una petición GET con los siguientes parámetros:
+Realizar una petición GET para obtener una imagen con los siguientes parámetros:
 
 | Parámetro | Tipo  | Descripción                                 |
 |-----------|-------|---------------------------------------------|
 | vid       | str   | ID del video      |
-| source   | str   | Origen del video (ej: youtube)        |
-| time   | int   | Tiempo de inicio en segundos (ej: 30)        |
-| resolution   | str   | Resolución vertical del video (por defecto 360)  |
+| source   | SourceOption   | Origen del video (ej: youtube)        |
+| time   | float   | Tiempo de inicio en segundos (ej: 30)        |
+| resolution   | int   | Resolución vertical del video (por defecto 360)  |
 
 ### Resoluciones habituales
-    - 144
-    - 240
-    - 360
-    - 480
-    - 720
-    - 1080    
-    - 1440
-    - 2160
+* 144
+* 240
+* 360
+* 480
+* 720
+* 1080    
+* 1440
+* 2160
 
 **Ejemplo de URL de petición**:
 `http://localhost:8000/capture-frame?vid=XXXXX&source=youtube&time=3&resolution=360`
 
 
+## Endpoint `/get-qualities`
+Realizar una petición GET para obtener todas las calidades exitentes del video, con los siguientes parámetros:
+
+| Parámetro | Tipo  | Descripción                                 |
+|-----------|-------|---------------------------------------------|
+| vid       | str   | ID del video      |
+| source   | SourceOption   | Origen del video (ej: youtube)        |
+
+**Ejemplo de URL de petición**:
+`http://localhost:8000/get-qualities?vid=XXXXX&source=youtube`
 ---
 
 ## Cómo correr el test
@@ -104,8 +114,3 @@ Hay un archivo `test.py` que hace una petición de prueba al servidor y guarda l
 - La aplicación está configurada para permitir solicitudes CORS únicamente desde dominios `*.minfra.gba.gob.ar`.
 
 ---
-
-
-# @TODO
-- Check if a video file already exists before trying to download it
-- Maybe autoclean older tmp files

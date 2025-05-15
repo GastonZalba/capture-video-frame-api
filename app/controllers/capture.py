@@ -1,13 +1,11 @@
 import os
-import tempfile
 
 import cv2
 from PIL import Image
 
 from .youtube import download_youtube_video
 from ..enums import SourceOption
-
-tmp_folder = f'{tempfile.gettempdir()}/ytdl'
+from ..params import tmp_folder
 
 def save_image_from_video(video_path, output_image):
     cap = cv2.VideoCapture(video_path)
@@ -32,9 +30,9 @@ def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: f
     video_filename = f"{tmp_folder}/{youtube_id}_{start_seconds}_{resolution}.webm"
     frame_id = f"ytid-{youtube_id}_sec-{start_seconds}_{resolution}"
     
-    output = tmp_folder + "/" + youtube_id
+    output = os.path.join(tmp_folder, youtube_id)
 
-    image_path = output + "/" + frame_id + ".jpeg"
+    image_path = os.path.join(output, frame_id + ".jpeg")
 
     # check if file is already downloaded
     if not os.path.isfile(image_path):

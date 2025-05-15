@@ -16,7 +16,7 @@ def download_youtube_video(youtube_id, start_seconds, video_filename, resolution
         ydl.download([create_url(youtube_id)])
 
 def get_youtube_qualities(youtube_id: str):
-    
+        
     ydl_opts = {
         'quiet': True,
         'skip_download': True,
@@ -31,7 +31,7 @@ def get_youtube_qualities(youtube_id: str):
         for fmt in info['formats']:
             if fmt.get('vcodec') != 'none' and fmt.get('acodec') == 'none':  # Solo video (sin audio)
                 height = fmt.get('height')
-                resolution = f"{height}p" if height else 'unknown'
+                resolution = height if height else 'unknown'
                 fps = fmt.get('fps') or 'unknown'
                 kbps = int(fmt.get('tbr')) if fmt.get('tbr') else 'unknown'
                 code = fmt.get('format_id')
@@ -42,5 +42,5 @@ def get_youtube_qualities(youtube_id: str):
                     'fps': fps,
                     'kbps': kbps
                 })
-
+        
     return results
