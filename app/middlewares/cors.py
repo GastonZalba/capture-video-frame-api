@@ -6,6 +6,5 @@ def add_cors_middleware(app):
         allow_origins=["https://*.minfra.gba.gob.ar"],
         allow_origin_regex=r"https:\/\/.*\.minfra\.gba\.gob\.ar$",
         allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_methods=["GET"]
     )
