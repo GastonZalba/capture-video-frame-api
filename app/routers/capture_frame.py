@@ -1,7 +1,5 @@
 import io, os
 
-from PIL import Image
-
 from fastapi import APIRouter, Query, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 
@@ -36,10 +34,9 @@ def get_image(
             img_io = cache
         else:                     
             img_path = download_and_capture(vid, source, time, resolution)
-            img = Image.open(img_path)
-            img_io = io.BytesIO()
-            img.save(img_io, 'JPEG')
-            img_io.seek(0)
+            with open(img_path, 'rb') as f:
+                img_bytes = f.read()
+            img_io = io.BytesIO(img_bytes)
         
             set_cache(id_cache, img_io, CACHE_DAYS_IMG)            
             background_tasks.add_task(delete_file, img_path)
