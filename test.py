@@ -1,10 +1,11 @@
 import requests
+import time
 
 params = {
     "vid": "dQw4w9WgXcQ",  # URL de ejemplo
     "source": "youtube",
     "time": 6.6,
-    "resolution": 360
+    "resolution": 1080
 }
 
 def test_get_qualities():
@@ -19,6 +20,8 @@ def test_get_qualities():
 
 
 def test_generate_image():
+    inicio = time.time()
+
     endpoint = "http://localhost:8000/capture-frame"
 
     response = requests.get(endpoint, params=params)
@@ -31,8 +34,13 @@ def test_generate_image():
         print(f"✅ Imagen guardada como {file_out}")
     else:
         print(f"❌ Error {response.status_code}: {response.text}")
+    
+    fin = time.time()
+    
+    print(f"La captura tardó {fin - inicio:.4f} segundos.")
+
 
 
 if __name__ == "__main__":
-    test_get_qualities()
+    #test_get_qualities()
     test_generate_image()
