@@ -7,10 +7,14 @@ def create_url(youtube_id: str):
 def download_youtube_video(youtube_id, start_seconds, video_filename, resolution):
     ydl_opts = {
         "verbose": False,
-        "format": f"bv[height={resolution}]",
+        "format": f"bv[height={resolution}][vcodec^=avc1]/bv[vcodec^=avc1]",
         "outtmpl": video_filename,
         "download_ranges": download_range_func(None, [(start_seconds, start_seconds + 0.1)]),
         "force_keyframes_at_cuts": True,
+        "allow_multiple_video_streams": False,
+        "allow_multiple_audio_streams": False,
+        "concurrent_fragment_downloads": 1,
+        "force_generic_extractor": False,
     }
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download([create_url(youtube_id)])

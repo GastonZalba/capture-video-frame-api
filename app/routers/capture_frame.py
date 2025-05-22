@@ -1,6 +1,8 @@
-import io
+import io, os
 
-from fastapi import APIRouter, Query, HTTPException
+from PIL import Image
+
+from fastapi import APIRouter, Query, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 
 from ..controllers.capture import download_and_capture
@@ -10,12 +12,20 @@ from ..enums import SourceOption
 
 router = APIRouter()
 
+def delete_file(path: str):
+    try:
+        os.remove(path)
+    except Exception as e:
+        print(f"No se pudo eliminar {path}: {e}")
+
+
 @router.get("/capture-frame")
 def get_image(
     vid: str = Query(..., description="Id del video"),
     source: SourceOption = Query(SourceOption.YT, description="Servicio de origen"),
     time: float = Query(..., ge=0, description="Tiempo (en segundos)"),
-    resolution: int = Query(360, description="Resolución")
+    resolution: int = Query(360, description="Resolución"),
+    background_tasks: BackgroundTasks = None
 ):
     try:
         
@@ -25,13 +35,15 @@ def get_image(
         if (cache):
             img_io = cache
         else:                     
-            img = download_and_capture(vid, source, time, resolution)
+            img_path = download_and_capture(vid, source, time, resolution)
+            img = Image.open(img_path)
             img_io = io.BytesIO()
             img.save(img_io, 'JPEG')
             img_io.seek(0)
         
-            set_cache(id_cache, img_io, CACHE_DAYS_IMG)
-
+            set_cache(id_cache, img_io, CACHE_DAYS_IMG)            
+            background_tasks.add_task(delete_file, img_path)
+            
         return StreamingResponse(img_io, media_type="image/jpeg")
     
     except Exception as e:
