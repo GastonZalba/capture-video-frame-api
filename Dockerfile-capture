@@ -1,0 +1,32 @@
+# Usa una imagen base oficial de Python
+FROM python:3.9-slim
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Instala dependencias del sistema para OpenCV y FFmpeg
+RUN apt-get update && apt-get install -y \
+    libopencv-dev \
+    python3-opencv \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    nano \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copia el archivo de requisitos (si existe) o instala dependencias directamente
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt 
+
+#|| pip install fastapi uvicorn opencv-python numpy pydantic python-multipart
+
+# Copia el código de la aplicación
+COPY . .
+
+ENV PYTHONPATH=/app
+# Expone el puerto donde corre la aplicación
+EXPOSE 8000
+
+# Comando para ejecutar la aplicación FastAPI
+#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

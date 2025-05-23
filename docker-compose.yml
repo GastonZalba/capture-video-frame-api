@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+ app:
+  build:
+   context: .
+   dockerfile: Dockerfile-capture
+  restart: always
+  ports:
+   - 8000:8000
+  volumes:
+   - ./:/app  # Monta todo el proyecto para desarrollo
+   - ./capture/app/data:/app/capture/app/data
+   - /etc/timezone:/etc/timezone:ro
+   - /etc/localtime:/etc/localtime:ro
+  environment:
+   - PYTHONUNBUFFERED=1
+   - PYTHONPATH=/app
+  deploy:
+   resources:
+    limits:
+     cpus: '2'
+     memory: '4g'
+    # Opcional: para desarrollo, habilita --reload
+    # command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
