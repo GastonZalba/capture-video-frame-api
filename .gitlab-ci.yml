@@ -1,0 +1,34 @@
+variables:
+  NOMBRE_REPO: "capture-video"
+
+stages:
+  - inicializar_repositorio
+  - migrar_repositorio
+  - dockerizar
+  
+inicializar_repositorio:
+  stage: inicializar_repositorio
+  script:
+    - /home/gitlab-runner/deploy_scripts/capture-video/inicializar.sh
+ # rules:
+ #   - if: $CI_COMMIT_BRANCH == "desa"
+  tags:
+    - dockerprod
+    
+migrar_repositorio:
+  stage: migrar_repositorio
+  script:
+    - /home/gitlab-runner/deploy_scripts/capture-video/migrarsistema.sh
+ # rules:
+ #   - if: $CI_COMMIT_BRANCH == "desa"
+  tags:
+    - dockerprod
+    
+dockerizar:
+  stage: dockerizar
+  script:
+    - /home/gitlab-runner/deploy_scripts/capture-video/docker.sh
+ # rules:
+ #   - if: $CI_COMMIT_BRANCH == "desa"
+  tags:
+    - dockerprod
