@@ -11,22 +11,28 @@ router = APIRouter()
 @router.get("/get-qualities")
 def get_qualities(
     vid: str = Query(..., description="Id del video"),
-    source: SourceOption = Query(SourceOption.YT, description="Servicio de origen")
+    source: SourceOption = Query(SourceOption.YT, description="Servicio de origen"),
+    disable_cache: bool = Query(False, description="Deshabilitar caché")
 ):
     try:    
         
-        id_cache = f'q_{vid}-{source}'
-        cache = get_cache(id_cache)
+        qualities = None
         
-        if (cache):
-            qualities = cache
-        else:
+        if not disable_cache:  
+            id_cache = f'q_{vid}-{source}'
+            cache = get_cache(id_cache)
+        
+            if (cache):
+                qualities = cache
+        
+        if not qualities:        
             if (source == SourceOption.YT):
                 qualities = get_youtube_qualities(vid)
             else:
                 return
             
-            set_cache(id_cache, qualities, CACHE_DAYS_JSON)
+            if not disable_cache:
+                set_cache(id_cache, qualities, CACHE_DAYS_JSON)
             
         return JSONResponse(content=qualities, status_code=200)
     

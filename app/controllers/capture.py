@@ -24,7 +24,7 @@ def save_image_from_video(video_path, output_image):
     return captured
 
 
-def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: float, resolution:str):
+def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: float, resolution: str, vcodec: str):
 
     video_filename = os.path.join(TMP_FOLDER, f"{youtube_id}_{start_seconds}_{resolution}.webm")
     frame_id = f"ytid-{youtube_id}_sec-{start_seconds}_{resolution}"
@@ -32,7 +32,7 @@ def download_and_capture(youtube_id: str, source: SourceOption, start_seconds: f
     image_path = os.path.join(TMP_FOLDER, frame_id + ".jpeg")
 
     if (source == SourceOption.YT):
-        download_youtube_video(youtube_id, start_seconds, video_filename, resolution)
+        download_youtube_video(youtube_id, start_seconds, video_filename, resolution, vcodec)
     else:
         return False
         

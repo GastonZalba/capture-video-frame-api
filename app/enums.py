@@ -7,3 +7,11 @@ class SourceOption(str, Enum):
     YT = "youtube"
     
     
+class VideoCodecOption(str, Enum):
+    '''
+    Valid video codec
+    '''
+    AVC1 = "avc1",
+    VP09 = "vp09",
+    VP9 = "vp9"
+    

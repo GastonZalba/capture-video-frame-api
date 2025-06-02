@@ -65,6 +65,8 @@ Realizar una petición GET para obtener una imagen con los siguientes parámetro
 | source   | SourceOption   | Origen del video (ej: youtube)        |
 | time   | float   | Tiempo de inicio en segundos (ej: 30)        |
 | resolution   | int   | Resolución vertical del video (por defecto 360)  |
+| vcodec   | VideoCodecOption   | Codec de video prioritario (por defecto avc1)  |
+| disable_cache   | bool   | Deshabilita el uso de caché  |
 
 #### Resoluciones habituales
 * 144
@@ -88,6 +90,7 @@ Realizar una petición GET para obtener todas las calidades exitentes del video,
 |-----------|-------|---------------------------------------------|
 | vid       | str   | ID del video      |
 | source   | SourceOption   | Origen del video (ej: youtube)        |
+| disable_cache   | bool   | Deshabilita el uso de caché  |
 
 **Ejemplo de URL de petición**:
 [http://localhost:8000/get-qualities?vid=dQw4w9WgXcQ&source=youtube](http://localhost:8000/get-qualities?vid=dQw4w9WgXcQ&source=youtube)
