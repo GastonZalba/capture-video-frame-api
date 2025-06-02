@@ -2,11 +2,11 @@ import requests
 import time
 
 params = {
-    "vid": "aB7dgH_ekl4",  # URL de ejemplo
+    "vid": "dQw4w9WgXcQ",  # URL de ejemplo
     "source": "youtube",
     "time": 6.6,
     "vcodec": "vp9", 
-    "resolution": 2160,
+    "resolution": 1080,
     #"disable_cache": True
 }
 
